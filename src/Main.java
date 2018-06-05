@@ -49,29 +49,50 @@ class Parser extends Source {
     }
 
     public final int expr() {
-        int x = number();
+        int x = term();
         while(true) {
             switch(peek()) {
             case '+':
                 next();
-                x += number();
+                x += term();
                 continue;
             case '-':
                 next();
-                x -= number();
-                continue;
-            case '*':
-                next();
-                x *= number();
-                continue;
-            case '/':
-                next();
-                x /= number();
+                x -= term();
                 continue;
             }
             break;
         }
         return x;
+    }
+
+    public final int term() {
+        int x = factor();
+        while(true) {
+            switch(peek()) {
+            case '*':
+                next();
+                x *= factor();
+                continue;
+            case '/':
+                next();
+                x /= factor();
+                continue;
+            }
+            break;
+        }
+        return x;
+    }
+    public int factor() {
+        if(peek() == '(') {
+            next();
+            int ret = expr();
+            if(peek() == ')') {
+                next();
+            }
+            return ret;
+        }
+        return number();
     }
 }
 
@@ -84,8 +105,8 @@ public class Main {
     public static void main(String[] args) {
        test("12+23+34");
        test("56+23-34");
-       test("46/23*34");
-       test("46-23*2");
+       test("(46+46)/23*34");
+       test("46-(23+4-15)*2");
 
     }
 
