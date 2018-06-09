@@ -3,11 +3,11 @@
  * 対象文字列と文字位置を保持するクラス
  *
  */
-class Source {
+class SourceTest {
     private final String str;
     private int pos;
 
-    public Source(String str) {
+    public SourceTest(String str) {
         this.str = str;
     }
 
@@ -30,7 +30,7 @@ class Source {
     }
 }
 
-class Parser extends Source {
+class Parser extends SourceTest {
 
     public Parser(String str) {
         super(str);
